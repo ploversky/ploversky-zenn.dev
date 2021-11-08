@@ -1,0 +1,205 @@
+;; -*- mode: Org; fill-column: 100; -*-
+
+#+STARTUP: content indent align inlineimages logdone hidestars hideblocks
+#+title: ploversky@zenn.dev source
+#+author: plaversky
+#+date: 2021-11-06
+#+options: toc:nil
+#+options: ^:{}
+
+#+begin_comment
+・このファイルは1記事1サブツリーで構成されています。
+・ox-zennでエキスポートします。サブツリーで C-c C-e C-s z z を押す。
+#+end_comment
+
+* 記事
+** TODO ナローイングを活用する
+:PROPERTIES:
+:CREATED: <2021-11-08 Mon 11:44>
+:EXPORT_FILE_NAME: articles/20211108-114446
+:EXPORT_GFM_TAGS: blog
+:EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 👩‍💻
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :type tech
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published false
+:END:
+
+*** orgファイルの一部分の編集に注力したい
+orgモードでは、TABキーを活用して、自由にヘッダを表示させたり、非表示にできたりする。ただ、orgファイルが長くなってくると、他の箇所に影響しないように編集するのに気を使うことが多くなる（置換するとか）
+
+そのようなとき、ナローイングが便利だ。ナローイングとは、ファイルの一部分のみをあたかも一つのファイルのようにバッファで編集する機能だ。これにより、他の箇所に影響を与えないで、編集したいサブツリーやブロックのみに集中することができる。
+
+次の4つのコマンドを覚えよう。
+
+| 操作    | 説明                           |
+|---------+--------------------------------|
+| C-x n s | 現在のサブツリーをナローイング |
+| C-x n b | 現在のブロックをナローイング   |
+|---------+--------------------------------|
+| C-x n w | ナローイングを解除             |
+| C-x n n | 任意の範囲をナローイング       |
+
+なお、後半の2つはorgモードに限らず、どのモードでも利用できる。
+
+** TODO WordpressとGitHubを連携させMarkdownで記事を書く
+:PROPERTIES:
+:CREATED: <2021-11-07 Sun 09:03>
+:EXPORT_FILE_NAME: articles/20211107-090326
+:EXPORT_GFM_TAGS: blog
+:EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 👩‍💻
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :type tech
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published false
+:END:
+
+*** はじめに
+みなさん、こんにちは。
+
+tech系のブロガーであれば、記事をMarkdownで執筆し、ブログとして公開するスタイルに魅力を感じるところでしょう。
+
+普段慣れている開発作業をワークフローをブログ記事の執筆に応用することができます。いわゆる静的サイトジェネレーター（SSG）と呼ばれるもので、メジャーなものは Github Page が標準で採用している[[http://jekyllrb-ja.github.io/][Jekyll]]や、[[https://gohugo.io/about/][Hugo]]でしょうか。
+
+この記事は、静的サイトジェネレーターのような運用をWordpressで実現しようというものです。
+
+*** メモ
+- プラグインの導入
+- GitHubとの接続
+  - WebHook
+- if permalinks are configured and the post type supports "hierarchy"
+- [[https://www.aakashweb.com/docs/git-it-write/faq/][if permalinks are configured and the post type supports "hierarchy" ]]
+  - パーマリンク設定の共通設定で「投稿名」を選択しておく
+- [[https://www.aakashweb.com/docs/git-it-write/writing-posts/][All images should be present in the _images folder]]
+  - イメージは_imagesに   https://raw.githubusercontent.com/ploversky/wordpress_content/main/_images/pic1.png
+  - _imagesフォルダを作るとアップロードに失敗するようだ
+    - ログが途中で止まっているように見える
+  - 別記事としてアップロードされているようだ
+- [[https://github.com/org2blog/org2blog#requirements-and-compatibility][org2blog/org2blog: Blog from Org mode to WordPress.]]
+  - org2blogモードだと、elのソースにバッククオートが2つあるとアップロードできない。Emacs側は問題なく生成しているようなので、xmlrpcのセキュリティ対策か？？
+
+*** 参考
++ [[https://www.aakashweb.com/docs/git-it-write/][Git it Write - Aakash Web]]
+  * 今回利用するプラグイン
++ [[https://wordpress.org/plugins/documents-from-git/][Documents from Git – WordPress plugin | WordPress.org]]
+  * Wordpressのshortcodeで実現する方法
+** orgのサブツリーをエキスポートする場合の設定
+:PROPERTIES:
+:CREATED: <2021-11-07 Sun 20:47>
+:EXPORT_FILE_NAME: articles/20211107-204717
+:EXPORT_GFM_TAGS: blog
+:EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 👩‍💻
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :type tech
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published false
+:END:
+
+*** orgのサブツリーをエキスポートするメリット
+emacsでは、orgファイル全体をHTMLやmarkdownにエキスポートすることができます。これに加えて、特定のサブツリー以下をエキスポートすることもできます。
+
+この機能を使うと、全てのブログ記事をまとめて一つのファイルで取り扱い、必要なサブツリーだけエキスポートして公開する、といった使い方が可能です。この方法は、[[http://jekyllrb-ja.github.io/][Jekyll]]や[[https://gohugo.io/about/][Hugo]]等の静的サイトジェネレーターでWebサイトを生成するときに便利に活用できます。
+
+静的サイトジェネレーターでは、1つの記事を1つのファイルとして扱います。この場合、それぞれのファイルはファイル名で区別することになりますが、ファイル名はslugや日付をつけることが一般的です。そうすると、ファイル名だけでは内容が分からない、という問題が発生します。
+
+そうではなく、全てのブログ記事を1つのorgファイルにまとめて、記事にしたいサブツリーを個別のファイルにエキスポートするようにすると、編集したい記事を簡単に追加したり、見つけることができるようになります。
+
+*** サブツリーにプロパティを設定する
+orgファイルには様々なプロパティを設定することができます。例えば、記事のタイトル、著者名、日付などです。これらはファイル全体に1つ設定することが基本的な使い方です。しかし、こういったプロパティをサブツリーにつけることも可能です。
+
+例を見てみましょう。
+
+#+begin_src org
+  :TITLE: 私のブログの記事
+  :DATE: 2021-11-01
+
+  ,* 記事
+  ,** ある日の日記
+  :PROPERTIES:
+  :EXPORT_TITLE: ブログに掲載するタイトル
+  :EXPORT_DATE: 2021-11-07
+  :EXPORT_FILE_NAME: articles/20211107-101407
+  :END:
+
+  ある日、こんなことがありました。
+#+end_src
+
+最初の2行はファイル全体につけたプロパティです。これに対して、「ある日の日記」の次の行から書かれているのがサブツリーに対するプロパティです。全て、ファイル全体につけられるプロパティの頭に「EXPORT_」をつけたものが、サブツリーのプロパティです。
+
+[[https://orgmode.org/manual/Export-Settings.html][When exporting sub-trees, special node properties can override the above keywords. These properties have an ‘EXPORT_’ prefix. For example, ‘DATE’ becomes, ‘EXPORT_DATE’ when used for a specific sub-tree. Except for ‘SETUPFILE’, all other keywords listed above have an ‘EXPORT_’ equivalent.]]
+
+これらはファイル全体のプロパティを上書きします。上記の例では、ファイル全体のタイトルは「私のブログの記事」ですが、サブツリーのタイトルは「ブログに掲載するタイトル」になります。
+
+このように設定したうえで、 C-c C-e でorgエキスポートのメニューを出し、 **C-s** を押してから目的のエキスポート形式を選択すれば、カーソルがいまいるサブツリーのみエキスポートすることができます。
+
+** orgからmarkdownにエキスポートする際、YAMLのフロントマターをつける
+:PROPERTIES:
+:CREATED:  <2021-11-07 Sun 10:14>
+:EXPORT_FILE_NAME: articles/20211107-101407
+:EXPORT_GFM_TAGS: blog
+:EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 👩‍💻
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :type tech
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published true
+:END:
+*** orgファイルにYAMLを書く方法
+ブログの記事をEmacsのorg-modeで作成し、markdownに変換して[[http://jekyllrb-ja.github.io/][Jekyll]]や[[https://gohugo.io/about/][Hugo]]でWebサイトを生成したいとき、YAMLのフロントマターをどのようにしてつければ良いでしょうか。
+
+結論としては簡単で、orgファイルの冒頭で、
+
+#+begin_example
+,#+begin_export markdown
+---
+title: Title of the post
+menu_order: 1
+post_status: publish
+---
+,#+end_export
+
+ここに記事の本文を書く
+#+end_example
+
+のように、「#+beigin_export markdown」と「#+end_expont」で囲ってYAMLを書いてあげればよいです。
+
+
+*** 参考
++ [[https://orgmode.org/worg/org-tutorials/org-jekyll.html][Using org to Blog with Jekyll]]
+  * orgでJekyllの記事を書く詳しい説明。
++ [[https://stackoverflow.com/questions/30430346/edit-yaml-frontmatter-in-org-mode-blog-post-destined-for-jekyll][emacs - Edit YAML frontmatter in org-mode blog post destined for Jekyll - Stack Overflow]]
+  * YAMLをyamlモードで編集したい場合、この方法も良さそうですね。
+
+** Emacsで絵文字を表示するには
+:PROPERTIES:
+:CREATED: <2021-11-06 Sat 23:30>
+:EXPORT_FILE_NAME: articles/20211106-233028
+:EXPORT_GFM_TAGS: blog
+:EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 😁
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :type tech
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published true
+:END:
+
+*** Emacsで絵文字を表示させるには？
+[[https://ja.fonts2u.com/symbola.%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88][Symbola フォント]]をインストールすれば自動で表示される（Emacs 27.1で確認）。ただし、表示はカラーではなく白黒。
+
+*** Emacsで絵文字を入力するには？
+Mozcで変換させれば入力できる。
+
+| 絵文字 | よみがな |
+|--------+----------|
+| 😁     | えがお   |
+| 🌄     | たいよう |
+| 🌔     | つき     |
+
+なんて楽ちんな世の中だ。
+
+** ox-zennでのエキスポートの方法
+:PROPERTIES:
+:CREATED: <2021-11-06 Sat 22:29>
+:EXPORT_FILE_NAME: articles/20211106-222913
+:EXPORT_GFM_TAGS: emacs
+:EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 👩‍💻 :type tech
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published true
+:END:
+
+*** エキスポートするには？
+エキスポートするサブツリーにカーソルを移動して、 C-c C-e C-s z z と押す。
+
+*** 2回目以降のショートカット
+2回目エキスポートする際は、 C-u を押してから C-c C-e だけで、前回と同じ設定でエキスポートできる。カーソルはどこにあってもOK。エキスポートするサブツリーは記憶されるようだ。
+* ファイルローカル変数
+;; Local Variables:
+;; eval: (visual-line-mode)
+;; End:
