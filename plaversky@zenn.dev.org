@@ -1,6 +1,6 @@
 ;; -*- mode: Org; fill-column: 100; -*-
 
-#+STARTUP: content indent align inlineimages logdone hidestars hideblocks
+#+STARTUP: content indent align logdone hidestars hideblocks
 #+title: ploversky@zenn.dev source
 #+author: plaversky
 #+date: 2021-11-06
@@ -12,7 +12,66 @@
 ・ox-zennでエキスポートします。サブツリーで C-c C-e C-s z z を押す。
 #+end_comment
 
-* 記事
+* 記事（zenn.dev.org）                                               :REFILE:
+** TODO EAF - Emacs Application Framework
+
+.emacs.dをgitで管理しているのでsubmoduleで追加
+install-eaf.py を実行する前に apt update && apt upgrade
+
+(leaf eaf
+  (eaf-browser-continue-where-left-off . t)
+  (eaf-browser-enable-adblocker . t)
+  (browse-url-browser-function . 'eaf-open-browser))
+** TODO smtpmail - メールの送信
+`
+説明
+最初のメールを送信時、パスワードを入力すると、~/.authinfo に自動で追加
+
+;; sending mail – replace USERNAME with your gmail username ;; also, make sure the gnutls command line utils are installed ;; package 'gnutls-bin' in Debian/Ubuntu
+
+
+
+
+(leaf smtpmail
+  :require t
+  :setq ((message-send-mail-function quote smtpmail-send-it)
+         (starttls-use-gnutls . t)
+         (smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil)))
+         (smtpmail-auth-credentials '(("smtp.gmail.com" 587 "yc@aiit.ac.jp" nil)))
+         (smtpmail-default-smtp-server . "smtp.gmail.com")
+         (smtpmail-smtp-server . "smtp.gmail.com")
+         (smtpmail-smtp-service . 587)
+** TODO WS2環境で知的生産性向上
+:PROPERTIES:
+:CREATED: <2021-11-08 Mon 19:30>
+:EXPORT_FILE_NAME: articles/20211108-193007
+:EXPORT_GFM_TAGS: blog
+:EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 👩‍💻
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :type tech
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published false
+:END:
+
+*** はじめに
+WSL2は開発環境だと認識されている。 しかし、知的な生産性を向上させることのできる技術である。
+
+Emacs
+Chrome（Webブラウザ）
+Nemo
+
+ここらへんをWSL2から使うとよい。 WSL2でXのアプリケーションを簡単に使えるようになってよかった。
+
+** TODO Zennの記事
+:PROPERTIES:
+:CREATED: <2021-11-08 Mon 19:28>
+:EXPORT_FILE_NAME: articles/20211108-192855
+:EXPORT_GFM_TAGS: blog
+:EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 👩‍💻
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :type tech
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published false
+:END:
+
+*** はじめに
+
 ** TODO ナローイングを活用する
 :PROPERTIES:
 :CREATED: <2021-11-08 Mon 11:44>
@@ -24,7 +83,7 @@
 :END:
 
 *** orgファイルの一部分の編集に注力したい
-orgモードでは、TABキーを活用して、自由にサブツリーを表示させたり、ヘッダのみにできたりします。ただ、orgファイルが長くなってくると、他の箇所に影響しないように編集するのに気を使うことが多くなる（置換するとか）
+orgモードでは、TABキーを活用して、自由にサブツリーを表示させたり、ヘッダのみにできたりします。ただ、orgファイルが長くなってくると、他の箇所に影響しないように編集するのに気を使うことが多くなります（単語を置換するとか）。
 
 そのようなとき、ナローイングが便利だ。ナローイングとは、ファイルの一部分のみをあたかも一つのファイルのようにバッファで編集する機能だ。これにより、他の箇所に影響を与えないで、編集したいサブツリーやブロックのみに集中することができる。
 
@@ -154,7 +213,6 @@ post_status: publish
 
 のように、「#+beigin_export markdown」と「#+end_expont」で囲ってYAMLを書いてあげればよいです。
 
-
 *** 参考
 + [[https://orgmode.org/worg/org-tutorials/org-jekyll.html][Using org to Blog with Jekyll]]
   * orgでJekyllの記事を書く詳しい説明。
@@ -199,6 +257,28 @@ Mozcで変換させれば入力できる。
 
 *** 2回目以降のショートカット
 2回目エキスポートする際は、 C-u を押してから C-c C-e だけで、前回と同じ設定でエキスポートできる。カーソルはどこにあってもOK。エキスポートするサブツリーは記憶されるようだ。
+
+** TODO orgでナローの解説
+:PROPERTIES:
+:CREATED: <2021-11-10 Wed 11:23>
+:ANNOTADED: [[file:~/.emacs.d/README.org::*UndoをC-zに][UndoをC-zに]]
+:END:
+
+** TODO orgでtagの使い方を記事に
+:PROPERTIES:
+:CREATED: <2021-11-10 Wed 11:23>
+:ANNOTADED: [[file:~/.emacs.d/README.org::*UndoをC-zに][UndoをC-zに]]
+:END:
+
+- C-c / m
+- [[https://orgmode.org/manual/Tag-Searches.html][Tag Searches (The Org Manual)]]
+
+** TODO orgのリファイル
+1. Journalファイルにどんどんメモをぶちこむ
+2. 整理するタイミングでリファイル
+3. アジェンダにあるファイルに、リファイルするための場所を付けておきましょう（未整理など）
+4. どこのファイルに移動しても、プロパティがついてくる（アジェンダでの表示は変わらない）
+
 * ファイルローカル変数
 ;; Local Variables:
 ;; eval: (visual-line-mode)
