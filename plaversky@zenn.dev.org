@@ -11,95 +11,10 @@
 #+begin_comment
 ・このファイルは1記事1サブツリーで構成されています。
 ・ox-zennでエキスポートします。サブツリーで C-c C-e C-s z z を押す。
+・その後、Gitリポジトリでコミットします
 #+end_comment
 
-* 記事（zenn.dev.org）                                               :REFILE:
-** TODO EAF - Emacs Application Framework
-
-.emacs.dをgitで管理しているのでsubmoduleで追加
-install-eaf.py を実行する前に apt update && apt upgrade
-
-(leaf eaf
-  (eaf-browser-continue-where-left-off . t)
-  (eaf-browser-enable-adblocker . t)
-  (browse-url-browser-function . 'eaf-open-browser))
-** TODO smtpmail - メールの送信
-`
-説明
-最初のメールを送信時、パスワードを入力すると、~/.authinfo に自動で追加
-
-;; sending mail – replace USERNAME with your gmail username ;; also, make sure the gnutls command line utils are installed ;; package 'gnutls-bin' in Debian/Ubuntu
-
-
-
-
-(leaf smtpmail
-  :require t
-  :setq ((message-send-mail-function quote smtpmail-send-it)
-         (starttls-use-gnutls . t)
-         (smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil)))
-         (smtpmail-auth-credentials '(("smtp.gmail.com" 587 "yc@aiit.ac.jp" nil)))
-         (smtpmail-default-smtp-server . "smtp.gmail.com")
-         (smtpmail-smtp-server . "smtp.gmail.com")
-         (smtpmail-smtp-service . 587)
-** TODO WS2環境で知的生産性向上
-:PROPERTIES:
-:CREATED: <2021-11-08 Mon 19:30>
-:EXPORT_FILE_NAME: articles/20211108-193007
-:EXPORT_GFM_TAGS: blog
-:EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 👩‍💻
-:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :type tech
-:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published false
-:END:
-
-*** はじめに
-WSL2は開発環境だと認識されている。 しかし、知的な生産性を向上させることのできる技術である。
-
-Emacs
-Chrome（Webブラウザ）
-Nemo
-
-ここらへんをWSL2から使うとよい。 WSL2でXのアプリケーションを簡単に使えるようになってよかった。
-
-** TODO Zennの記事
-:PROPERTIES:
-:CREATED: <2021-11-08 Mon 19:28>
-:EXPORT_FILE_NAME: articles/20211108-192855
-:EXPORT_GFM_TAGS: blog
-:EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 👩‍💻
-:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :type tech
-:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published false
-:END:
-
-*** はじめに
-
-** TODO ナローイングを活用する
-:PROPERTIES:
-:CREATED: <2021-11-08 Mon 11:44>
-:EXPORT_FILE_NAME: articles/20211108-114446
-:EXPORT_GFM_TAGS: blog
-:EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 👩‍💻
-:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :type tech
-:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published false
-:END:
-
-*** orgファイルの一部分の編集に注力したい
-orgモードでは、TABキーを活用して、自由にサブツリーを表示させたり、ヘッダのみにできたりします。ただ、orgファイルが長くなってくると、他の箇所に影響しないように編集するのに気を使うことが多くなります（単語を置換するとか）。
-
-そのようなとき、ナローイングが便利だ。ナローイングとは、ファイルの一部分のみをあたかも一つのファイルのようにバッファで編集する機能だ。これにより、他の箇所に影響を与えないで、編集したいサブツリーやブロックのみに集中することができる。
-
-次の4つのコマンドを覚えよう。
-
-| 操作    | 説明                           |
-|---------+--------------------------------|
-| C-x n s | 現在のサブツリーをナローイング |
-| C-x n b | 現在のブロックをナローイング   |
-|---------+--------------------------------|
-| C-x n w | ナローイングを解除             |
-| C-x n n | 任意の範囲をナローイング       |
-
-なお、後半の2つはorgモードに限らず、どのモードでも利用できる。
-
+* 記事                                                                :@tech:
 ** TODO WordpressとGitHubを連携させMarkdownで記事を書く
 :PROPERTIES:
 :CREATED: <2021-11-07 Sun 09:03>
@@ -139,7 +54,90 @@ tech系のブロガーであれば、記事をMarkdownで執筆し、ブログ�
   * 今回利用するプラグイン
 + [[https://wordpress.org/plugins/documents-from-git/][Documents from Git – WordPress plugin | WordPress.org]]
   * Wordpressのshortcodeで実現する方法
-** orgのサブツリーをエキスポートする場合の設定
+** Emacsで絵文字を表示するには                                   :published:
+:PROPERTIES:
+:CREATED: <2021-11-06 Sat 23:30>
+:EXPORT_FILE_NAME: articles/20211106-233028
+:EXPORT_GFM_TAGS: blog
+:EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 😁
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :type tech
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published true
+:END:
+
+*** Emacsで絵文字を表示させるには？
+[[https://ja.fonts2u.com/symbola.%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88][Symbola フォント]]をインストールすれば自動で表示される（Emacs 27.1で確認）。ただし、表示はカラーではなく白黒。
+
+*** Emacsで絵文字を入力するには？
+Mozcで変換させれば入力できる。
+
+| 絵文字 | よみがな |
+|--------+----------|
+| 😁     | えがお   |
+| 🌄     | たいよう |
+| 🌔     | つき     |
+
+なんて楽ちんな世の中だ。
+
+* 記事（org-mode関連）
+** TODO ナローイングを活用する
+:PROPERTIES:
+:CREATED: <2021-11-08 Mon 11:44>
+:EXPORT_FILE_NAME: articles/20211108-114446
+:EXPORT_GFM_TAGS: blog
+:EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 👩‍💻
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :type tech
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published false
+:END:
+
+*** orgファイルの一部分の編集に注力したい
+orgモードでは、TABキーを活用して、自由にサブツリーを表示させたり、ヘッダのみにできたりします。ただ、orgファイルが長くなってくると、他の箇所に影響しないように編集するのに気を使うことが多くなります（単語を置換するとか）。
+
+そのようなとき、ナローイングが便利だ。ナローイングとは、ファイルの一部分のみをあたかも一つのファイルのようにバッファで編集する機能だ。これにより、他の箇所に影響を与えないで、編集したいサブツリーやブロックのみに集中することができる。
+
+次の4つのコマンドを覚えよう。
+
+| 操作    | 説明                           |
+|---------+--------------------------------|
+| C-x n s | 現在のサブツリーをナローイング |
+| C-x n b | 現在のブロックをナローイング   |
+|---------+--------------------------------|
+| C-x n w | ナローイングを解除             |
+| C-x n n | 任意の範囲をナローイング       |
+
+なお、後半の2つはorgモードに限らず、どのモードでも利用できる。
+** TODO orgでナローの解説
+:PROPERTIES:
+:CREATED: <2021-11-10 Wed 11:23>
+:ANNOTADED: [[file:~/.emacs.d/README.org::*UndoをC-zに][UndoをC-zに]]
+:END:
+** TODO orgでtagの使い方を記事に
+:PROPERTIES:
+:CREATED: <2021-11-10 Wed 11:23>
+:ANNOTADED: [[file:~/.emacs.d/README.org::*UndoをC-zに][UndoをC-zに]]
+:END:
+
+- C-c / m
+- [[https://orgmode.org/manual/Tag-Searches.html][Tag Searches (The Org Manual)]]
+** TODO orgのリファイル
+1. Journalファイルにどんどんメモをぶちこむ
+2. 整理するタイミングでリファイル
+3. アジェンダにあるファイルに、リファイルするための場所を付けておきましょう（未整理など）
+4. どこのファイルに移動しても、プロパティがついてくる（アジェンダでの表示は変わらない）
+** ox-zennでのエキスポートの方法                                 :published:
+:PROPERTIES:
+:CREATED: <2021-11-06 Sat 22:29>
+:EXPORT_FILE_NAME: articles/20211106-222913
+:EXPORT_GFM_TAGS: emacs
+:EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 👩‍💻 :type tech
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published true
+:END:
+
+*** エキスポートするには？
+エキスポートするサブツリーにカーソルを移動して、 C-c C-e C-s z z と押す。
+
+*** 2回目以降のショートカット
+2回目エキスポートする際は、 C-u を押してから C-c C-e だけで、前回と同じ設定でエキスポートできる。カーソルはどこにあってもOK。エキスポートするサブツリーは記憶されるようだ。
+** orgのサブツリーをエキスポートする場合の設定                   :published:
 :PROPERTIES:
 :CREATED: <2021-11-07 Sun 20:47>
 :EXPORT_FILE_NAME: articles/20211107-204717
@@ -185,8 +183,7 @@ orgファイルには様々なプロパティを設定することができま�
 これらはファイル全体のプロパティを上書きします。上記の例では、ファイル全体のタイトルは「私のブログの記事」ですが、サブツリーのタイトルは「ブログに掲載するタイトル」になります。
 
 このように設定したうえで、 C-c C-e でorgエキスポートのメニューを出し、 **C-s** を押してから目的のエキスポート形式を選択すれば、カーソルがいまいるサブツリーのみエキスポートすることができます。
-
-** orgからmarkdownにエキスポートする際、YAMLのフロントマターをつける
+** orgからmarkdownにエキスポートする際、YAMLのフロントマターをつける :published:
 :PROPERTIES:
 :CREATED:  <2021-11-07 Sun 10:14>
 :EXPORT_FILE_NAME: articles/20211107-101407
@@ -219,66 +216,25 @@ post_status: publish
   * orgでJekyllの記事を書く詳しい説明。
 + [[https://stackoverflow.com/questions/30430346/edit-yaml-frontmatter-in-org-mode-blog-post-destined-for-jekyll][emacs - Edit YAML frontmatter in org-mode blog post destined for Jekyll - Stack Overflow]]
   * YAMLをyamlモードで編集したい場合、この方法も良さそうですね。
-
-** Emacsで絵文字を表示するには
+* Zenn - 記事のアイデア                                              :REFILE:
+** TODO WS2環境で知的生産性向上
 :PROPERTIES:
-:CREATED: <2021-11-06 Sat 23:30>
-:EXPORT_FILE_NAME: articles/20211106-233028
+:CREATED: <2021-11-08 Mon 19:30>
+:EXPORT_FILE_NAME: articles/20211108-193007
 :EXPORT_GFM_TAGS: blog
-:EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 😁
+:EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 👩‍💻
 :EXPORT_GFM_CUSTOM_FRONT_MATTER+: :type tech
-:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published true
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published false
 :END:
 
-*** Emacsで絵文字を表示させるには？
-[[https://ja.fonts2u.com/symbola.%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88][Symbola フォント]]をインストールすれば自動で表示される（Emacs 27.1で確認）。ただし、表示はカラーではなく白黒。
+*** はじめに
+WSL2は開発環境だと認識されている。 しかし、知的な生産性を向上させることのできる技術である。
 
-*** Emacsで絵文字を入力するには？
-Mozcで変換させれば入力できる。
+Emacs
+Chrome（Webブラウザ）
+Nemo
 
-| 絵文字 | よみがな |
-|--------+----------|
-| 😁     | えがお   |
-| 🌄     | たいよう |
-| 🌔     | つき     |
-
-なんて楽ちんな世の中だ。
-
-** ox-zennでのエキスポートの方法
-:PROPERTIES:
-:CREATED: <2021-11-06 Sat 22:29>
-:EXPORT_FILE_NAME: articles/20211106-222913
-:EXPORT_GFM_TAGS: emacs
-:EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 👩‍💻 :type tech
-:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published true
-:END:
-
-*** エキスポートするには？
-エキスポートするサブツリーにカーソルを移動して、 C-c C-e C-s z z と押す。
-
-*** 2回目以降のショートカット
-2回目エキスポートする際は、 C-u を押してから C-c C-e だけで、前回と同じ設定でエキスポートできる。カーソルはどこにあってもOK。エキスポートするサブツリーは記憶されるようだ。
-
-** TODO orgでナローの解説
-:PROPERTIES:
-:CREATED: <2021-11-10 Wed 11:23>
-:ANNOTADED: [[file:~/.emacs.d/README.org::*UndoをC-zに][UndoをC-zに]]
-:END:
-
-** TODO orgでtagの使い方を記事に
-:PROPERTIES:
-:CREATED: <2021-11-10 Wed 11:23>
-:ANNOTADED: [[file:~/.emacs.d/README.org::*UndoをC-zに][UndoをC-zに]]
-:END:
-
-- C-c / m
-- [[https://orgmode.org/manual/Tag-Searches.html][Tag Searches (The Org Manual)]]
-
-** TODO orgのリファイル
-1. Journalファイルにどんどんメモをぶちこむ
-2. 整理するタイミングでリファイル
-3. アジェンダにあるファイルに、リファイルするための場所を付けておきましょう（未整理など）
-4. どこのファイルに移動しても、プロパティがついてくる（アジェンダでの表示は変わらない）
+ここらへんをWSL2から使うとよい。 WSL2でXのアプリケーションを簡単に使えるようになってよかった。
 
 * ファイルローカル変数
 ;; Local Variables:
