@@ -183,7 +183,7 @@ orgファイルには様々なプロパティを設定することができま�
 
 [fn:1] [[https://orgmode.org/manual/Export-Settings.html][When exporting sub-trees, special node properties can override the above keywords. These properties have an ‘EXPORT_’ prefix. For example, ‘DATE’ becomes, ‘EXPORT_DATE’ when used for a specific sub-tree. Except for ‘SETUPFILE’, all other keywords listed above have an ‘EXPORT_’ equivalent.]]
 
-これらはファイル全体のプロパティを上書きします。上記の例では、ファイル全体のタイトルは「私のブログの記事」ですが、サブツリーのタイトルは「ブログに掲載するタイトル」になります。
+これらはファイル全体のプロパティを上書きします。上記の例では、ファイル全体のタイトルは「私のブログの記事」ですが、サブツリーのタイトルは「ブログに掲載するタイトル」になります。また、エキスポートするファイルのPATHは EXPORT_FILE_NAME プロパティで設定しています。
 
 このように設定したうえで、 C-c C-e でorgエキスポートのメニューを出し、 **C-s** を押してから目的のエキスポート形式を選択すれば、カーソルがいまいるサブツリーのみエキスポートすることができます。ただし、1つの記事を更にサブツリーに分けているときは注意が必要です。カーソルは必ず、記事全体のサブツーリに置きます。
 
