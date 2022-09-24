@@ -144,7 +144,7 @@ orgモードでは、TABキーを活用して、自由にサブツリーを表�
 :EXPORT_GFM_TAGS: blog
 :EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 😽
 :EXPORT_GFM_CUSTOM_FRONT_MATTER+: :type tech
-:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published false
+:EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published true
 :END:
 
 *** orgのサブツリーを1つの記事にするメリット
