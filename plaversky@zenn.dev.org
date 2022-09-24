@@ -137,12 +137,12 @@ orgモードでは、TABキーを活用して、自由にサブツリーを表�
 
 *** 2回目以降のショートカット
 2回目エキスポートする際は、 C-u を押してから C-c C-e だけで、前回と同じ設定でエキスポートできる。カーソルはどこにあってもOK。エキスポートするサブツリーは記憶されるようだ。
-** orgのサブツリーをエキスポートする場合の設定                   :published:
+** orgファイルのサブツリーを記事としてエキスポートする方法      :published:
 :PROPERTIES:
 :CREATED: <2021-11-07 Sun 20:47>
 :EXPORT_FILE_NAME: articles/20211107-204717
 :EXPORT_GFM_TAGS: blog
-:EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 👩‍💻
+:EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 😽
 :EXPORT_GFM_CUSTOM_FRONT_MATTER+: :type tech
 :EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published false
 :END:
@@ -163,8 +163,8 @@ orgファイルには様々なプロパティを設定することができま�
 例を見てみましょう。
 
 #+begin_src org
-  :TITLE: 私のブログの記事
-  :DATE: 2021-11-01
+  #+TITLE: 私のブログの記事
+  #+DATE: 2021-11-01
 
   ,* 記事
   ,** ある日の日記
@@ -177,9 +177,9 @@ orgファイルには様々なプロパティを設定することができま�
   ある日、こんなことがありました。
 #+end_src
 
-最初の2行はファイル全体につけたプロパティです。これに対して、「ある日の日記」の次の行から書かれているのがサブツリーに対するプロパティです。全て、ファイル全体につけられるプロパティの頭に「EXPORT_」をつけたものが、サブツリーのプロパティです。
+最初の2行はファイル全体につけたプロパティです。これに対して、「ある日の日記」の次の行から書かれているのがサブツリーに対するプロパティです。全て、ファイル全体につけられるプロパティの頭に「EXPORT_」をつけたものが、サブツリーのプロパティです[fn:1]。
 
-[[https://orgmode.org/manual/Export-Settings.html][When exporting sub-trees, special node properties can override the above keywords. These properties have an ‘EXPORT_’ prefix. For example, ‘DATE’ becomes, ‘EXPORT_DATE’ when used for a specific sub-tree. Except for ‘SETUPFILE’, all other keywords listed above have an ‘EXPORT_’ equivalent.]]
+[fn:1] [[https://orgmode.org/manual/Export-Settings.html][When exporting sub-trees, special node properties can override the above keywords. These properties have an ‘EXPORT_’ prefix. For example, ‘DATE’ becomes, ‘EXPORT_DATE’ when used for a specific sub-tree. Except for ‘SETUPFILE’, all other keywords listed above have an ‘EXPORT_’ equivalent.]]
 
 これらはファイル全体のプロパティを上書きします。上記の例では、ファイル全体のタイトルは「私のブログの記事」ですが、サブツリーのタイトルは「ブログに掲載するタイトル」になります。
 
