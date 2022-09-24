@@ -141,7 +141,7 @@ orgモードでは、TABキーを活用して、自由にサブツリーを表�
 :PROPERTIES:
 :CREATED: <2021-11-07 Sun 20:47>
 :EXPORT_FILE_NAME: articles/20211107-204717
-:EXPORT_GFM_TAGS: blog
+:EXPORT_GFM_TAGS: emacs org
 :EXPORT_GFM_CUSTOM_FRONT_MATTER: :emoji 😽
 :EXPORT_GFM_CUSTOM_FRONT_MATTER+: :type tech
 :EXPORT_GFM_CUSTOM_FRONT_MATTER+: :published true
@@ -187,7 +187,10 @@ orgファイルには様々なプロパティを設定することができま�
 
 このように設定したうえで、 C-c C-e でorgエキスポートのメニューを出し、 **C-s** を押してから目的のエキスポート形式を選択すれば、カーソルがいまいるサブツリーのみエキスポートすることができます。ただし、1つの記事を更にサブツリーに分けているときは注意が必要です。カーソルは必ず、記事全体のサブツーリに置きます。
 
+#+begin_warning
 なお、一度エキスポートしたら、後は **C-u** C-c C-e とすれば、全く同じ設定で、かつ、カーソルがどこにいてもエキスポートすることができます。
+#+end_warning
+
 
 ** orgからmarkdownにエキスポートする際、YAMLのフロントマターをつける :published:
 :PROPERTIES:
